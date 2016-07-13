@@ -6,7 +6,7 @@ if __name__ == "__main__":
   # Parameters
   nrEpochs = 100
   learningRate = 0.01
-  datsetPath = 'fourclass_scale.txt'
+  datsetPath = 'fourclass_scale'
   logdirPath = "/tmp/regression"
   
   # Load the dataset, shuffle it and split it into train and test
