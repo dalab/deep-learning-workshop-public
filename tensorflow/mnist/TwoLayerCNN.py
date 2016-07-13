@@ -87,7 +87,7 @@ class CNN(object):
         h_conv2 = tf.nn.relu(conv2d(h_pool1, self.W_conv2) + b_conv2)
         # print h_conv2.get_shape() # the shape is [-1,  14, 14, num_filters_fist_layer] i.e. [-1,  14, 14, 64]
         h_pool2 = max_pool_2x2(h_conv2)
-        # print h_pool2.get_shape() # the shape is [-1,  14, 14, num_filters_second_layer] i.e. [-1, 7, 7, 64]
+        # print h_pool2.get_shape() # the shape is [-1,  7, 7, num_filters_second_layer] i.e. [-1, 7, 7, 64]
 
         # Create a densely connected layer
         W_fc1 = weight_variable([7 * 7 * 64, size_fully_connected_layer], "W_fc1")
@@ -97,11 +97,6 @@ class CNN(object):
         h_fc1 = tf.nn.relu(tf.matmul(h_pool2_flat, W_fc1) + b_fc1)
         # the shape of h_fc1 is [-1, size_fully_connected_layer]
 
-        # Add dropout
-        h_fc1_drop = tf.nn.dropout(h_fc1, self.keep_prob)
-
-        W_fc2 = weight_variable([size_fully_connected_layer, num_classes], "W_fc2")
-        b_fc2 = bias_variable([num_classes], "b_fc2")
 
         # TODO: Add dropout
 
