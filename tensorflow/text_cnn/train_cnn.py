@@ -110,13 +110,12 @@ with tf.Graph().as_default():
         #model = models.Word2Vec.load_word2vec_format('word-embeddings/GoogleNews-vectors-negative300.bin', binary=True)
         
         my_embedding_matrix = np.zeros(shape=(len(vocab_processor.vocabulary_), FLAGS.embedding_dim))
-        i = 0
         for word in vocab_processor.vocabulary_._mapping:
+            id = vocab_processor.vocabulary_._mapping[word]
             if word in model.vocab:
                 my_embedding_matrix[i] = model[word]  
             else:
                 my_embedding_matrix[i] = np.random.uniform(low=-0.25, high=0.25, size=FLAGS.embedding_dim)
-            i += 1
 
         pretrained_embeddings = tf.placeholder(tf.float32, [None, None], name="pretrained_embeddings")
         set_x = cnn.pretrained_embeddings.assign(pretrained_embeddings)
