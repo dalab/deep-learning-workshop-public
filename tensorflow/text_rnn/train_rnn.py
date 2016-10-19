@@ -145,9 +145,9 @@ with tf.Graph().as_default():
         for word in vocab_processor.vocabulary_._mapping:
             id = vocab_processor.vocabulary_._mapping[word]
             if word in model.vocab:
-                my_embedding_matrix[i] = model[word]
+                my_embedding_matrix[id] = model[word]
             else:
-                my_embedding_matrix[i] = np.random.uniform(low=-0.25, high=0.25, size=FLAGS.embedding_dim)
+                my_embedding_matrix[id] = np.random.uniform(low=-0.25, high=0.25, size=FLAGS.embedding_dim)
 
         pretrained_embeddings = tf.placeholder(tf.float32, [None, None], name="pretrained_embeddings")
         set_x = rnn.pretrained_embeddings.assign(pretrained_embeddings)
