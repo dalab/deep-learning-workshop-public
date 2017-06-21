@@ -36,6 +36,8 @@ class CNN(object):
         def conv2d(x, W):
             return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding='SAME')
 
+
+
         # performs max pooling over 2x2 blocks
         # input shapes:
         # x is the input tensor - should be a 4-D tensor of shape [batch_size, in_height, in_width, in_channels]
@@ -104,8 +106,9 @@ class CNN(object):
         l2_loss = 0.0
         l2_loss += tf.nn.l2_loss(W_fc2)
         l2_loss += tf.nn.l2_loss(b_fc2)
-        self.y = tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+        self.y = tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2) + 0.00001 * l2_loss
         self.cross_entropy = tf.reduce_mean(-tf.reduce_sum(self.y_ * tf.log(self.y), reduction_indices=[1]))
+
         # here the regularization rate is fixed, you should make this a hyperparameter
-        self.correct_prediction = tf.equal(tf.argmax(self.y, 1), tf.argmax(self.y_, 1)) + 0.00001 * l2_loss
+        self.correct_prediction = tf.equal(tf.argmax(self.y, 1), tf.argmax(self.y_, 1))
         self.accuracy = tf.reduce_mean(tf.cast(self.correct_prediction, tf.float32))
