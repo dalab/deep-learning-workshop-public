@@ -33,7 +33,7 @@ class TextCNN(object):
             # conv2d expects a 4-dim tensor of size [batch size, width, height, channels]. self.embedded_tokens doesn't
             # contain the dimension for the channel so we expand the tensor to have one more dimension manually
             self.embedded_tokens_expanded = tf.expand_dims(self.embedded_tokens, -1)
-            print self.embedded_tokens_expanded.get_shape()
+            print(self.embedded_tokens_expanded.get_shape())
 
         # Create a convolution + maxpool layer for each filter size
         pooled_outputs = []
@@ -68,8 +68,8 @@ class TextCNN(object):
 
         # Combine all the pooled features
         num_filters_total = num_filters * len(filter_sizes)
-        self.h_pool = tf.concat(3, pooled_outputs)
-        print self.h_pool.get_shape()
+        self.h_pool = tf.concat(pooled_outputs, axis=3)
+        print(self.h_pool.get_shape())
         self.h_pool_flat = tf.reshape(self.h_pool, [-1, num_filters_total])
 
         # Add dropout
@@ -90,7 +90,7 @@ class TextCNN(object):
 
         # CalculateMean cross-entropy loss
         with tf.name_scope("loss"):
-            losses = tf.nn.softmax_cross_entropy_with_logits(self.scores, self.input_y)
+            losses = tf.nn.softmax_cross_entropy_with_logits(logits=self.scores, labels=self.input_y)
             self.loss = tf.reduce_mean(losses) + l2_reg_lambda * l2_loss
 
         # Accuracy
