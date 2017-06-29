@@ -106,8 +106,8 @@ class CNN(object):
         l2_loss = 0.0
         l2_loss += tf.nn.l2_loss(W_fc2)
         l2_loss += tf.nn.l2_loss(b_fc2)
-        self.y = tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2) + 0.00001 * l2_loss
-        self.cross_entropy = tf.reduce_mean(-tf.reduce_sum(self.y_ * tf.log(self.y), reduction_indices=[1]))
+        self.y = tf.nn.softmax(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
+        self.cross_entropy = tf.reduce_mean(-tf.reduce_sum(self.y_ * tf.log(self.y), reduction_indices=[1])) + 0.00001 * l2_loss
 
         # here the regularization rate is fixed, you should make this a hyperparameter
         self.correct_prediction = tf.equal(tf.argmax(self.y, 1), tf.argmax(self.y_, 1))
